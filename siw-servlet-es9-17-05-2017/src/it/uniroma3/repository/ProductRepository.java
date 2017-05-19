@@ -1,4 +1,4 @@
-package repository;
+package it.uniroma3.repository;
 
 import javax.persistence.EntityManager;
 

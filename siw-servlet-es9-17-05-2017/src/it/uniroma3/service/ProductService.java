@@ -1,4 +1,4 @@
-package service;
+package it.uniroma3.service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
