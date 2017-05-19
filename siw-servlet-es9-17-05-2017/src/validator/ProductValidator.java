@@ -1,4 +1,4 @@
-package it.uniroma3.validator;
+package validator;
 
 import java.text.DateFormat;
 import java.text.ParseException;
