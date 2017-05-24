@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 public class CrudRepositoryJpa<T> implements CrudRepository<T> {
 	private EntityManager em;
-	private Class<T> entityClass;
+	private Class<T> entityClass; //ci serve farci passare la classe dell'oggetto.
 	
 	public CrudRepositoryJpa(EntityManager em, Class<T> entityClass) {
 		this.em = em;
@@ -24,7 +24,10 @@ public class CrudRepositoryJpa<T> implements CrudRepository<T> {
 		return className;
 	}
 
-	
+	//la soluzione fatta da tiziano presupponeva che ci fosse sempre un attributo id, cosa non sempre vera. 
+	//Facciamo una cosa più didattica: il metodo getId potrebbe non esistere
+	//sfruttiamo il fatto che ogni entità  ha @id, quindi c'è una qualche informazione che ci dice che quella variabile è la chiave.
+	//mi cerco l'attributo che è stato marcato come id. --> ALLA FINE SI USANO DELLE LIBRERIE PER FARE QUESTO
 	@Override
 	public T save(T entity) {
 		Method getId = null;
@@ -71,6 +74,6 @@ public class CrudRepositoryJpa<T> implements CrudRepository<T> {
 	}
 
 	protected EntityManager getEm() {
-		return this.em;
+		return this.em;		//protected cosi lo usano solo per le classi che la estendono
 	}
 }

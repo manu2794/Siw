@@ -19,33 +19,41 @@ public class ProductValidator {
 		Prodotto p = (Prodotto) request.getAttribute("prodotto");
 		boolean tuttoOk=true;
 
+		//vincoli: sono tutti campi obbligatori (nella form c'è *)
 		if(nome==null ||nome.equals("")){
 			request.setAttribute("errNome", "Attenzione: campo obbligatorio");
 			tuttoOk=false;
 		}
-		else{
+		else {
 			p.setNome(nome);
 		}
+		
 		if(descrizione==null ||descrizione.equals("")){
 			request.setAttribute("errDescrizione", "Attenzione: campo obbligatorio");
 			tuttoOk=false;
-		}else{
+		}
+		else {
 			p.setDescrizione(descrizione);
 		}
+		
 		try{
 			float pre=Float.parseFloat(prezzo);
 			p.setPrezzo(pre);
 		}
+		
 		catch (NumberFormatException e){
 			request.setAttribute("errPrezzo", "Prezzo non valido, DEVE essere un numero!!!");
 			tuttoOk=false;
 		}
+		
+		//PREZZO --> verifichiamo che sia veramente un float
 		if(prezzo==null ||prezzo.equals("")){
 			request.setAttribute("errPrezzo", "Attenzione: campo obbligatorio");
 			tuttoOk=false;
 		}
 
 		try{
+			
 			DateFormat df= new SimpleDateFormat("dd/MM/yyyy");
 			Date d=df.parse(dataScadenza);
 			if(d.compareTo(new Date())>0)

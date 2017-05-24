@@ -24,6 +24,7 @@ public class ProductValidator {
 		String dataScadenza = request.getParameter("dataScadenza");
 		Prodotto prodotto = (Prodotto) request.getAttribute("prodotto");
 		
+		//vincoli: sono tutti campi obbligatori (nella form c'è *)
 		if(nome == null || nome.equals("")) {
 			request.setAttribute("errNome", "Campo obbligatorio");
 			tuttoOk = false;
@@ -38,12 +39,16 @@ public class ProductValidator {
 		else
 			prodotto.setDescrizione(descrizione);
 		
+		//PREZZO --> verifichiamo che sia veramente un float
 		if(prezzo == null || prezzo.equals("")) {
 			request.setAttribute("errPrezzo", "Campo obbligatorio");
 			tuttoOk = false;
 		}
 		else {
 			try {
+				//request.setAttribute("prezzo", Float.parseFloat(prezzo)); // al posto di creare il prodotto sopra
+				//ritorna il prezzo (dalla stringa ritorna un float;
+				//se non è un float lancia un'eccezione
 				prodotto.setPrezzo(Float.parseFloat(prezzo));
 			}
 			catch (NumberFormatException e) {
@@ -52,12 +57,14 @@ public class ProductValidator {
 			}
 		}
 		
+		//DATA SCADENZA --> verifichiamo che sia una data
 		if(dataScadenza == null || dataScadenza.equals("")) {
 			request.setAttribute("errDataScadenza", "Campo obbligatorio");
 			tuttoOk = false;
 		}
 		else {
 			try {
+				//il metodo che ci serve in DateFormat non è static, quindi definiamo un oggetto DateFormat
 				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				prodotto.setDataScadenza(df.parse(dataScadenza));
 				if(df.parse(dataScadenza).compareTo(new Date()) < 0) {

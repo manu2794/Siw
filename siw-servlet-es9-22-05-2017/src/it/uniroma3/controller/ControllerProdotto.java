@@ -1,5 +1,7 @@
 package it.uniroma3.controller;
+
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,48 +21,63 @@ import javax.servlet.http.HttpSession;
 import it.uniroma3.model.Prodotto;
 import it.uniroma3.service.ProductService;
 import it.uniroma3.validator.ProductValidator;
+
 @WebServlet("/prodotto")
 public class ControllerProdotto extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-
+	
+	//abbiamo cambiato doGet in doPost perchè i dati delle form è meglio tenerli nascosti
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nextPage="/prodotti.jsp";
-		if(request.getParameter("comand")!=null){
+		
+		String nextPage = "/prodotti.jsp";
+		
+		if(request.getParameter("comand") != null){
 			long id = Long.parseLong(request.getParameter("id"));
-			ProductService pv=new ProductService();
-			Prodotto p = pv.getOneProduct(id);
-			pv.delete(p);
-			request.setAttribute("prodotti", pv.getProdotti());
+			ProductService ps = new ProductService();
+			Prodotto p = ps.getOneProduct(id);
+			ps.delete(p);
+			request.setAttribute("prodotti", ps.getProdotti());
 			nextPage="/linkProdotti.jsp";
 		}
-		else{
+		
+		else {
+			
 			Prodotto nuovoProdotto=new Prodotto();
 			request.setAttribute("prodotto", nuovoProdotto);
 
-			ProductValidator validator=new ProductValidator();
-			boolean tuttoOk=validator.validate(request);
+			ProductValidator validator = new ProductValidator();
+			boolean tuttoOk = validator.validate(request);
 			List<Prodotto> lista=new ArrayList<>();
 			if(tuttoOk){
-				ProductService pv=new ProductService();
-				pv.inserisciProdotto(nuovoProdotto);
+				ProductService ps = new ProductService();
+				ps.inserisciProdotto(nuovoProdotto);
 				lista.add(nuovoProdotto);
 				request.setAttribute("prodotti", lista);
 			}
+			
 			if(!tuttoOk)
-				nextPage="/index.jsp";
+				nextPage = "/index.jsp";
 		}
+		
 		ServletContext application  = getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher(nextPage);
 		rd.forward(request, response);
 		return; 
 	}
 
+	//servono altri controlli: che quello che abbiamo scritto per il prezzo sia veramente un numero, ma il codice diventa lungo
+	//lo organizziamo meglio facendo un metodo (o una classe: ValidatorProdotto) che fa dei controlli
+	//su quello che arriva da input
+	
+	//questo mi mostra la pagina con la descrizione del prodotto
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String nextPage="/linkProdotti.jsp";
 
 		ProductService service = new ProductService();
 
+		//se ho l'id stampo questo, sennò stampo tutto
 		if(request.getParameter("id")!=null){
 			long id=Long.parseLong(request.getParameter("id"));
 			Prodotto p=service.getOneProduct(id);

@@ -9,7 +9,7 @@
 </head>
 <body>
 	<ul>
-		<c:forEach var="prodotto" items="${prodotti}">
+		<c:forEach var = "prodotto" items = "${prodotti}">
 			<li>nome = ${prodotto.nome}; prezzo = ${prodotto.prezzo}, data
 				di scadenza = ${prodotto.dataScadenza}</li>
 		</c:forEach>

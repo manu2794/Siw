@@ -23,11 +23,11 @@ public class ControllerProdotto extends HttpServlet {
 	}
 
 	private static final long serialVersionUID = 1L;
-
+	
+	// abbiamo cambiato doGet in doPost perchè i dati delle form è meglio tenerli nascosti --> con la doGet comparirebbero nell'URL
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String nextPage;
-		
 		Prodotto prodotto = new Prodotto();
 		request.setAttribute("prodotto", prodotto);
 		
