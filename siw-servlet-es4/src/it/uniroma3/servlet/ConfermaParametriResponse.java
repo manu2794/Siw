@@ -10,13 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+// pagina che mostra i risultati e chiede la conferma dei dati
 @WebServlet("/conferma")
 public class ConfermaParametriResponse extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-
+		//gestione della RISPOSTA
+		
 		HttpSession session = request.getSession();
 
 		// imposto il tipo (HTML)
@@ -39,7 +41,7 @@ public class ConfermaParametriResponse extends HttpServlet {
 		out.println("</ul>");
 		out.println("<h2>Scegli:</h2>");
 		out.println("<ul>");
-		out.println("<li><a href=\"mostra\">Conferma i dati inseriti</a></li>");
+		out.println("<li><a href=\"mostra\">Conferma i dati inseriti</a></li>");	//rimanda alla pagina costruita dalla servlet /mostra
 		out.println("<li><a href=\"inserimento.html\">Torna all'inserimento</a></li>");
 		out.println("</ul>");
 

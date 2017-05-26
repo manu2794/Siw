@@ -17,7 +17,7 @@ public class MostraParametri extends HttpServlet {
 						throws ServletException, IOException {
 		// gestione della RICHIESTA
 
-		// leggo i parametri
+		// leggo i parametri, se un parametro non esiste --> ritorna null
 	  	String nome = request.getParameter("nome");
 	  	String cognome = request.getParameter("cognome");
 
@@ -28,7 +28,7 @@ public class MostraParametri extends HttpServlet {
 
 		// gestione della RISPOSTA
 
-				// preparo il tipo (HTML)
+				// preparo il tipo (HTML) --> specifica il tipo di contenuto della risposta(in questo caso HTML)
 				response.setContentType("text/html");
 			    	// preparo un oggetto su cui scrivere la risposta
 			    	PrintWriter out = response.getWriter();

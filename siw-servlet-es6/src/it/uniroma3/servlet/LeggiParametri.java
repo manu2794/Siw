@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+// stesso progetto dell'es 3 ma usiamo pagine JSP al 
+// posto delle servlet che producono la risposta
 @WebServlet("/processa")
 public class LeggiParametri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +24,7 @@ public class LeggiParametri extends HttpServlet {
 		String nome = request.getParameter("nome").toUpperCase();
 		String cognome = request.getParameter("cognome").toUpperCase();
 
+		
 //		// leggo (alcune) intestazioni http della richiesta
 //		String address = (String)request.getRemoteAddr();
 //		String host = (String)request.getRemoteHost();

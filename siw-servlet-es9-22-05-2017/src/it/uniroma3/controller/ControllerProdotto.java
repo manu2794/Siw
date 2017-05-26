@@ -22,7 +22,7 @@ import it.uniroma3.model.Prodotto;
 import it.uniroma3.service.ProductService;
 import it.uniroma3.validator.ProductValidator;
 
-@WebServlet("/prodotto")
+@WebServlet("/prodotto") //nome applicazione
 public class ControllerProdotto extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

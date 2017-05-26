@@ -26,7 +26,7 @@ public class MostraParametriRequest extends HttpServlet {
 		// metto i valori nella sessione
 		HttpSession session = request.getSession();
 		session.setAttribute("NOME", nome);
-		session.setAttribute("COGNOME", nome);
+		session.setAttribute("COGNOME", cognome);
 
 		// inoltro
 		ServletContext application  = getServletContext();

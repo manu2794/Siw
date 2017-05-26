@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/studenteController")
 public class StudenteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	/* Verifica la correttezza dei valori inseriti.
 	 * Se i valori non sono corretti, aggiunge un attributo alla richiesta
 	 * di nome parametroError, e come valore una stringa con un messaggio di errore.
@@ -30,24 +30,25 @@ public class StudenteController extends HttpServlet {
 			String cognomeInserito = request.getParameter("cognome");
 			String matricolaInserita = request.getParameter("matricola");
 			String dataInserita = request.getParameter("dataNascita");
-			
+
 			String nextPage;
-			
+
 			if (matricolaInserita != null && !matricolaInserita.equals("")) {
 				Integer matricola = Integer.parseInt(matricolaInserita);
-				
+
 				if (dataInserita != null && !dataInserita.equals("")) {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = sdf.parse(dataInserita);
 					studente.setDataNascita(date);
 				}
-				
+
 				studente.setNome(nomeInserito.toUpperCase());
 				studente.setCognome(cognomeInserito.toUpperCase());
 				studente.setMatricola(matricola);
-				
+
 				request.setAttribute("studente",studente);
 				nextPage = "/studente.jsp";
+				
 			} else {
 				if (matricolaInserita == null || matricolaInserita.equals("")) {
 					request.setAttribute("errMatricola", "Campo obbligatorio!");
@@ -58,7 +59,7 @@ public class StudenteController extends HttpServlet {
 				request.setAttribute("dataNascita", dataInserita);
 				nextPage = "/index.jsp";
 			}
-			
+
 			ServletContext application  = getServletContext();
 			RequestDispatcher rd = application.getRequestDispatcher(nextPage);
 			rd.forward(request, response);

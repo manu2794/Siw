@@ -9,14 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+// pagina che mostra i dati confermati
 @WebServlet("/mostra")
 public class MostraParametriResponse extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-
+		//gestione della RISPOSTA
+		
 		HttpSession session = request.getSession();
 		// preparo il tipo (HTML)
 		response.setContentType("text/html");

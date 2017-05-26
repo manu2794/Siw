@@ -33,10 +33,13 @@ public class LeggiParametri extends HttpServlet {
 		request.setAttribute("host", host);
 		request.setAttribute("userAgent", userAgent);
 		
-		// inoltro
+		// inoltro: poichè gli oggetti servlet vivono nel contenitore, non abbiamo un riferimento ad essi.
+		//			dunque l'operazione di "richiamo" della risposta deve essere fatta dal contenitore.
+		
+		//			Il contenitore ha un oggetto Dispatcher capace di inoltrare richieste ad altri oggetti servlet
 		ServletContext application  = getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher("/mostraDati");
-		rd.forward(request, response);
+		RequestDispatcher rd = application.getRequestDispatcher("/mostraDati");		// route della servlet al quale si vuole inosltrare la richiesta
+		rd.forward(request, response);		// con la forward avviene l'inoltro della richiesta
 		return; 
 	}
 }

@@ -39,9 +39,14 @@ public class ConfermaParametriResponse extends HttpServlet {
 		out.println("</ul>");
 		out.println("<h2>Scegli:</h2>");
 		out.println("<ul>");
+		
+		//Riscrittura degli URL: entra in gioco se le impostazioni del browser rifiutassero i cookie chiedendo al contenitore di aggiungere
+		//agli URL nel codice HTML di risposta l'ID della sessione
+		//conviene usarla sempre, rende la gestione della sessione più robusta
 		String encodedURL = response.encodeURL("mostra");
 		out.println("<li><a href=" + encodedURL + ">Conferma i dati inseriti</a></li>");
 		out.println("<li><a href=\"inserimento.html\">Torna all'inserimento</a></li>");
+		
 		out.println("</ul>");
 
 		out.println("</body>\n</html> ");
