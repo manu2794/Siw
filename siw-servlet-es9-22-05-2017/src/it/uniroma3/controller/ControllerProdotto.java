@@ -2,11 +2,7 @@ package it.uniroma3.controller;
 
 import java.io.IOException;
 
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -16,12 +12,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import it.uniroma3.model.Prodotto;
 import it.uniroma3.service.ProductService;
 import it.uniroma3.validator.ProductValidator;
-
 
 @WebServlet("/prodotto") //nome applicazione
 public class ControllerProdotto extends HttpServlet {
@@ -31,39 +25,46 @@ public class ControllerProdotto extends HttpServlet {
 	//abbiamo cambiato doGet in doPost perchè i dati delle form è meglio tenerli nascosti
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String nextPage = "/prodotto.jsp"; //era prodotti
+		String nextPage = "/prodotto.jsp";
 
+		//rimuove prodotto
 		if(request.getParameter("comand") != null){
 			long id = Long.parseLong(request.getParameter("id"));
-			ProductService ps = new ProductService();
-			Prodotto p = ps.getOneProduct(id);
-			ps.delete(p);
-			request.setAttribute("prodotti", ps.getProdotti());
+			ProductService service = new ProductService();
+			Prodotto p = service.getOneProduct(id);
+			service.delete(p);
+			request.setAttribute("prodotti", service.getProdotti());
 			nextPage="/prodotti.jsp";
 		}
 
 		else {
 
+			//aggiunge prodotto dopo aver controllato la validità
 			Prodotto nuovoProdotto = new Prodotto();
 			request.setAttribute("prodotto", nuovoProdotto);
 
 			ProductValidator validator = new ProductValidator();
 			boolean tuttoOk = validator.validate(request);
 			List<Prodotto> lista = new ArrayList<>();
-			if(tuttoOk){  // se  i dati sono corretti crea un oggetto prodotto e chiede al servizio di inserire il prodotto
-				ProductService ps = new ProductService();
-				ps.inserisciProdotto(nuovoProdotto);
+			if(tuttoOk){  // se  i dati sono corretti chiede al servizio di inserire il prodotto creato
+				ProductService service = new ProductService();
+				service.inserisciProdotto(nuovoProdotto);
 				lista.add(nuovoProdotto);
 				request.setAttribute("prodotti", lista);
-
 			} 
-			if(!tuttoOk)
+			else {
 				nextPage = "/index.jsp";
+			}
 		}
+		
+		// inoltro: poichè gli oggetti servlet vivono nel contenitore, non abbiamo un riferimento ad essi.
+				//			dunque l'operazione di "richiamo" della risposta deve essere fatta dal contenitore.
+				
+				//			Il contenitore ha un oggetto Dispatcher capace di inoltrare richieste ad altri oggetti servlet
 
 		ServletContext application  = getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher(nextPage);
-		rd.forward(request, response);
+		RequestDispatcher rd = application.getRequestDispatcher(nextPage);		// route della servlet al quale si vuole inosltrare la richiesta
+		rd.forward(request, response);											// con la forward avviene l'inoltro della richiesta
 		return; 
 	}
 
@@ -79,10 +80,10 @@ public class ControllerProdotto extends HttpServlet {
 
 		ProductService service = new ProductService();
 
-		//se ho l'id stampo questo, sennò stampo tutto
-		if(request.getParameter("id")!=null){
-			long id=Long.parseLong(request.getParameter("id"));
-			Prodotto p=service.getOneProduct(id);
+		//se ho l'id stampo questo prodotto, sennò stampo tutti i prodotti
+		if(request.getParameter("id") != null){
+			long id = Long.parseLong(request.getParameter("id"));
+			Prodotto p = service.getOneProduct(id);
 			request.setAttribute("prodotto", p);
 			nextPage="/prodotto.jsp";
 		}
@@ -96,7 +97,4 @@ public class ControllerProdotto extends HttpServlet {
 		rd.forward(request, response);
 		return; 
 	}
-
 }
-
-
