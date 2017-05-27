@@ -25,25 +25,25 @@ import it.uniroma3.validator.ProductValidator;
 
 @WebServlet("/prodotto") //nome applicazione
 public class ControllerProdotto extends HttpServlet {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	//abbiamo cambiato doGet in doPost perchè i dati delle form è meglio tenerli nascosti
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String nextPage = "/prodotti.jsp";
-		
+
+		String nextPage = "/prodotto.jsp"; //era prodotti
+
 		if(request.getParameter("comand") != null){
 			long id = Long.parseLong(request.getParameter("id"));
 			ProductService ps = new ProductService();
 			Prodotto p = ps.getOneProduct(id);
 			ps.delete(p);
 			request.setAttribute("prodotti", ps.getProdotti());
-			nextPage="/linkProdotti.jsp";
+			nextPage="/prodotti.jsp";
 		}
-		
+
 		else {
-			
+
 			Prodotto nuovoProdotto = new Prodotto();
 			request.setAttribute("prodotto", nuovoProdotto);
 
@@ -55,26 +55,27 @@ public class ControllerProdotto extends HttpServlet {
 				ps.inserisciProdotto(nuovoProdotto);
 				lista.add(nuovoProdotto);
 				request.setAttribute("prodotti", lista);
-			}
-			
+
+			} 
 			if(!tuttoOk)
 				nextPage = "/index.jsp";
 		}
-		
+
 		ServletContext application  = getServletContext();
 		RequestDispatcher rd = application.getRequestDispatcher(nextPage);
 		rd.forward(request, response);
 		return; 
 	}
 
+
 	//servono altri controlli: che quello che abbiamo scritto per il prezzo sia veramente un numero, ma il codice diventa lungo
 	//lo organizziamo meglio facendo un metodo (o una classe: ValidatorProdotto) che fa dei controlli
 	//su quello che arriva da input
-	
+
 	//questo mi mostra la pagina con la descrizione del prodotto
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String nextPage="/linkProdotti.jsp";
+		String nextPage="/prodotti.jsp";
 
 		ProductService service = new ProductService();
 

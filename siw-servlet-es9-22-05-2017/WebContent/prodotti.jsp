@@ -8,11 +8,15 @@
 <title>Lista Prodotti</title>
 </head>
 <body>
-	<ul>
-		<c:forEach var = "prodotto" items = "${prodotti}">
-			<li>nome = ${prodotto.nome}; 
-				prezzo = ${prodotto.prezzo}, 
-				data di scadenza = ${prodotto.dataScadenza}</li>
+	Lista Prodotti:
+	<ul>				<!-- questo era controllerDati -->
+		<c:forEach var="prodotto" items="${prodotti}">							
+			<li><a href="prodotto?id=${prodotto.id}"> ${prodotto.nome}</a>		<!-- stiamo componendo un URL con il link al prodotto -->
+				<form action="prodotto" method="post"> 							<!-- mettiamo un bottone per cancellare un prodotto --> 
+					<input type="hidden" value="${prodotto.id}" name="id" />	<!-- dobbiamo passare il parametro che indica il prodotto da cancellare -->
+					<input type="submit" value="rimuovi" name="comand"/>
+				</form>
+			</li>
 		</c:forEach>
 	</ul>
 </body>
