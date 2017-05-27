@@ -14,7 +14,7 @@ import it.uniroma3.repository.ProductRepository;
 //dovra delegare le operazioni ad un crudRepository funzionante
 public class ProductService {
 
-	//entity manager comme variabile d'istanza
+	//entity manager come variabile d'istanza
 	private EntityManager em;
 
 	//dobbiamo far diventare il nostro Prodotto una entità, per poterlo
@@ -26,11 +26,11 @@ public class ProductService {
 	//l'entity manager andrebbe creato una volta sola e basta, quindi dovremmo spostarlo nel contesto dell'applicazione
 	//così è a disposizione di tutti ed è implementato una volta sola
 	public Prodotto inserisciProdotto(Prodotto p){
-		EntityManagerFactory emf= Persistence.createEntityManagerFactory("esercitazioneCompleta-unit");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("esercitazioneCompleta-unit");
 		//ProductRepository productRepository = new ProductRepository(this.em);
 		//productRepository.save(prodotto); //poi ha fatto il persist da qui dentro a causa di errori --> da risolvere
-		em=emf.createEntityManager();
-		EntityTransaction et= em.getTransaction();
+		em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		et.begin();
 		em.persist(p);
 		et.commit();
@@ -42,11 +42,11 @@ public class ProductService {
 	public List<Prodotto> getProdotti() {
 		List<Prodotto> p = new ArrayList<Prodotto>();
 		EntityManagerFactory emf= Persistence.createEntityManagerFactory("esercitazioneCompleta-unit");
-		em=emf.createEntityManager();
-		EntityTransaction et= em.getTransaction();
+		em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		et.begin();
 		TypedQuery<Prodotto> query= em.createNamedQuery("findAll", Prodotto.class);
-		p=query.getResultList();
+		p = query.getResultList();
 		et.commit();
 		em.close();
 		emf.close();
@@ -55,11 +55,11 @@ public class ProductService {
 	}
 
 	public Prodotto getOneProduct(long id) {
-		EntityManagerFactory emf= Persistence.createEntityManagerFactory("esercitazioneCompleta-unit");
-		em=emf.createEntityManager();
-		EntityTransaction et= em.getTransaction();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("esercitazioneCompleta-unit");
+		em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		et.begin();
-		Prodotto p=em.find(Prodotto.class,id);
+		Prodotto p = em.find(Prodotto.class,id);
 		et.commit();
 		em.close();
 		emf.close();
@@ -68,10 +68,10 @@ public class ProductService {
 	
 	public void delete(Prodotto p){
 		EntityManagerFactory emf= Persistence.createEntityManagerFactory("esercitazioneCompleta-unit");
-		em=emf.createEntityManager();
-		EntityTransaction et= em.getTransaction();
+		em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
 		et.begin();
-		em.remove(em.contains(p) ? p : em.merge(p));
+		em.remove(em.contains(p) ? p : em.merge(p)); //operatore condizionale ternario
 		et.commit();
 		em.close();
 		emf.close();

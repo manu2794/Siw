@@ -7,13 +7,10 @@
 <title>Dettagli Prodotto</title>
 </head>
 <body>
-	<ul>
-		<li>${prodotto.nome}</li>
-		<li>Descrizione : ${prodotto.descrizione}</li>
-		<li>Prezzo : ${prodotto.prezzo}</li>
-		<li>Data di Scadenza : ${prodotto.dataScadenza}</li>
-	</ul>
-
+	<h1>Nome: ${prodotto.nome}</h1>
+	<div>Descrizione: ${prodotto.descrizione}</div>
+	<div>Prezzo: ${prodotto.prezzo}</div>
+	<div>Data di Scadenza: ${prodotto.dataScadenza}</div>
 </body>
 </html>
 

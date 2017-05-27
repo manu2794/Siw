@@ -22,6 +22,7 @@ import it.uniroma3.model.Prodotto;
 import it.uniroma3.service.ProductService;
 import it.uniroma3.validator.ProductValidator;
 
+
 @WebServlet("/prodotto") //nome applicazione
 public class ControllerProdotto extends HttpServlet {
 	
@@ -43,13 +44,13 @@ public class ControllerProdotto extends HttpServlet {
 		
 		else {
 			
-			Prodotto nuovoProdotto=new Prodotto();
+			Prodotto nuovoProdotto = new Prodotto();
 			request.setAttribute("prodotto", nuovoProdotto);
 
 			ProductValidator validator = new ProductValidator();
 			boolean tuttoOk = validator.validate(request);
-			List<Prodotto> lista=new ArrayList<>();
-			if(tuttoOk){
+			List<Prodotto> lista = new ArrayList<>();
+			if(tuttoOk){  // se  i dati sono corretti crea un oggetto prodotto e chiede al servizio di inserire il prodotto
 				ProductService ps = new ProductService();
 				ps.inserisciProdotto(nuovoProdotto);
 				lista.add(nuovoProdotto);
@@ -85,7 +86,7 @@ public class ControllerProdotto extends HttpServlet {
 			nextPage="/prodotto.jsp";
 		}
 		else{
-			List<Prodotto> prodotti=service.getProdotti();
+			List<Prodotto> prodotti = service.getProdotti();
 			request.setAttribute("prodotti", prodotti);
 		}
 

@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 
 public class CrudRepositoryJpa<T> implements CrudRepository<T> {
 	private EntityManager em;
-	private Class<T> entityClass; //ci serve farci passare la classe dell'oggetto.
+	private Class<T> entityClass; // serve a farci passare la classe dell'oggetto.
 	
 	public CrudRepositoryJpa(EntityManager em, Class<T> entityClass) {
 		this.em = em;
@@ -18,7 +18,7 @@ public class CrudRepositoryJpa<T> implements CrudRepository<T> {
 	}
 	
 	private String getClassName() {
-		String fullClassName = this.entityClass.getCanonicalName();
+		String fullClassName = this.entityClass.getCanonicalName(); //ritorna il nome della classe
 		String className = fullClassName.substring(fullClassName.lastIndexOf('.') + 1);
 		
 		return className;
@@ -26,7 +26,7 @@ public class CrudRepositoryJpa<T> implements CrudRepository<T> {
 
 	//la soluzione fatta da tiziano presupponeva che ci fosse sempre un attributo id, cosa non sempre vera. 
 	//Facciamo una cosa più didattica: il metodo getId potrebbe non esistere
-	//sfruttiamo il fatto che ogni entità  ha @id, quindi c'è una qualche informazione che ci dice che quella variabile è la chiave.
+	//sfruttiamo il fatto che ogni entità  ha @Id, quindi c'è una qualche informazione che ci dice che quella variabile è la chiave.
 	//mi cerco l'attributo che è stato marcato come id. --> ALLA FINE SI USANO DELLE LIBRERIE PER FARE QUESTO
 	@Override
 	public T save(T entity) {
@@ -58,6 +58,7 @@ public class CrudRepositoryJpa<T> implements CrudRepository<T> {
 
 	@Override
 	public List<T> findAll() {
+		//passiamo la classe come tipo e lui restituisce una lista(non più di oggetti ma di tipo T)
 		TypedQuery<T> query = em.createQuery("SELECT e FROM " + this.getClassName() + " e", this.entityClass);
 		return query.getResultList();
 	}

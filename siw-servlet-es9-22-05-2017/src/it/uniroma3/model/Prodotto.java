@@ -11,13 +11,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQueries(value = { 
-		@NamedQuery(name="findAll",query="SELECT p FROM Prodotto p")
-})
+@NamedQueries(value = {@NamedQuery(name="findAll",query="SELECT p FROM Prodotto p")})
 public class Prodotto {
+	
 	@Id
-
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String nome;
 	private String descrizione;
@@ -32,11 +30,9 @@ public class Prodotto {
 		return dataScadenza;
 	}
 
-
 	public void setDataScadenza(Date dataScadenza) {
 		this.dataScadenza = dataScadenza;
 	}
-
 
 	public float getPrezzo() {
 		return prezzo;
