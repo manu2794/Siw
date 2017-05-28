@@ -17,7 +17,7 @@ public class ProductValidator {
 		String prezzo = request.getParameter("prezzo");
 		String dataScadenza = request.getParameter("dataScadenza");
 		Prodotto p = (Prodotto) request.getAttribute("prodotto");
-		boolean tuttoOk=true;
+		boolean tuttoOk = true;
 
 		//vincoli: sono tutti campi obbligatori (nella form c'è *)
 		if(nome==null ||nome.equals("")){

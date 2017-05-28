@@ -2,7 +2,6 @@ package it.uniroma3.controller;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -26,15 +25,16 @@ public class ControllerProdotto extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String nextPage = "/prodotto.jsp";
-
-		//rimuove prodotto
+		
+		ProductService service = new ProductService();
+		
+		//rimuove prodotto quando clicchiamo su rimuovi
 		if(request.getParameter("comand") != null){
 			long id = Long.parseLong(request.getParameter("id"));
-			ProductService service = new ProductService();
 			Prodotto p = service.getOneProduct(id);
 			service.delete(p);
 			request.setAttribute("prodotti", service.getProdotti());
-			nextPage="/prodotti.jsp";
+			nextPage = "/prodotti.jsp";
 		}
 
 		else {
@@ -45,9 +45,9 @@ public class ControllerProdotto extends HttpServlet {
 
 			ProductValidator validator = new ProductValidator();
 			boolean tuttoOk = validator.validate(request);
-			List<Prodotto> lista = new ArrayList<>();
+//			List<Prodotto> lista = new ArrayList<>();
+			List<Prodotto> lista = service.getProdotti();
 			if(tuttoOk){  // se  i dati sono corretti chiede al servizio di inserire il prodotto creato
-				ProductService service = new ProductService();
 				service.inserisciProdotto(nuovoProdotto);
 				lista.add(nuovoProdotto);
 				request.setAttribute("prodotti", lista);
